@@ -16,7 +16,7 @@ function ShoppingCartApp() {
   const [products, setProducts] = useState(PRODUCTS);
   const [freeGiftAdded, setFreeGiftAdded] = useState(false);
 
-  useEffect[
+  useEffect
     (() => {
       const cartSubtotal = cart.reduce(
         (total, item) => total + item.price * item.quantity,
@@ -25,7 +25,7 @@ function ShoppingCartApp() {
       if (cartSubtotal >= THRESHOLD && !freeGiftAdded) {
         setCart((prevCart) => [...prevCart, { ...FREE_GIFT, quantity: 1 }]);
         setFreeGiftAdded(true);
-      } else if (cartSubtotal < THRESHOLD && !freeGiftAdded) {
+      } else if (cartSubtotal < THRESHOLD && freeGiftAdded) {
         setCart((prevCart) =>
           prevCart.filter((item) => item.id != FREE_GIFT.id)
         );
@@ -33,7 +33,6 @@ function ShoppingCartApp() {
       }
     },
     [cart, freeGiftAdded])
-  ];
 
   const addToCart = (product) => {
     console.log("adding to cart:", product);
@@ -78,17 +77,17 @@ function ShoppingCartApp() {
 
   calculateProPer;
   return (
-    <div className="max-w-4xl">
+    <div className="max-w-4xl mx-auto p-4 bg-grey-50 min-h-screen">
       <h1 className="text-2xl font-semibold mb-4 text-center text-black-700">
         Shopping Cart
       </h1>
-      <div>
+      <div className="mb-7">
         <h2 className="text-xl font-semibold mb-4 text-black-700 ">Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-4">
           {products.map((product) => (
             <div key={product.id} className="bg-white p-4 rounded-lg shadow-sm">
               <h3 className="font-medium text-black-600">{product.name}</h3>
-              <p> ${product.price} </p>
+              <p className="text-black-600 my-2"> ${product.price} </p>
               <button
                 onClick={() => addToCart(product)}
                 className="w-full bg-blue-600 text-white py-2 rounded-md"
@@ -137,7 +136,7 @@ function ShoppingCartApp() {
           <h2 className="test-xl font-semibold mb-4 test-black-700">
             Cart items
           </h2>
-          {cart.map((item) => {
+          {cart.map((item) => (
             <div
               key={item.id}
               className="flex justify-between items-center py-4 border-b border-grey-100 last:border-0"
@@ -173,8 +172,8 @@ function ShoppingCartApp() {
                   <span className="text-ts font-medium text-green-600 bg-green-100 px-2 py-1 rounded">FREE GIFT </span>
                 )}
               </div>
-            </div>;
-          })}
+            </div>
+          ))}
         </div>
       ) : (
         <div className="bg-white rounded-lg shadow-sm p-6 text-center">
